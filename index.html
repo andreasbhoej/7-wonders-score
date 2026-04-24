@@ -285,6 +285,17 @@
       font-size: 0.9rem;
     }
 
+    .refresh-button {
+      margin-top: 10px;
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .refresh-button:hover {
+      background: #f3f4f6;
+    }
+
     @media (max-width: 900px) {
       .dashboard {
         grid-template-columns: 1fr;
@@ -312,6 +323,7 @@
       <h1>Achievement Logger - Dune Uprising</h1>
       <p>Select an achievement and log who completed it, when, and with which leader.</p>
       <div class="status" id="syncStatus">Loading shared data...</div>
+      <button class="refresh-button" id="refreshButton" type="button">Refresh data</button>
     </header>
 
     <section class="dashboard">
@@ -346,7 +358,6 @@
 
   <script>
     const API_URL = "https://script.google.com/macros/s/AKfycbyvt_19cwIVXTmPgbtML9LJ7tSPNgKhd4UEFCcpJFDNGWoGbo2-NPDSQsaJkuhnCt8s7g/exec";
-    const REFRESH_INTERVAL_MS = 5000;
 
     const leaders = [
       "AMBER",
@@ -394,6 +405,7 @@
     const leaderboard = document.getElementById("leaderboard");
     const recentActivity = document.getElementById("recentActivity");
     const syncStatus = document.getElementById("syncStatus");
+    const refreshButton = document.getElementById("refreshButton");
     const totalCompletions = document.getElementById("totalCompletions");
     const totalPlayers = document.getElementById("totalPlayers");
     const completedTypes = document.getElementById("completedTypes");
@@ -403,7 +415,8 @@
 
     renderAll();
     loadCompletions();
-    setInterval(loadCompletions, REFRESH_INTERVAL_MS);
+
+    refreshButton.addEventListener("click", loadCompletions);
 
     achievementList.addEventListener("submit", async function (event) {
       event.preventDefault();
@@ -481,6 +494,8 @@
     async function loadCompletions() {
       if (isLoading) return;
       isLoading = true;
+      refreshButton.disabled = true;
+      refreshButton.textContent = "Refreshing...";
 
       try {
         const response = await fetch(API_URL);
@@ -510,6 +525,8 @@
         console.error("Google Sheets load error:", error);
       } finally {
         isLoading = false;
+        refreshButton.disabled = false;
+        refreshButton.textContent = "Refresh data";
       }
     }
 
