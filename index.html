@@ -1,704 +1,408 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="da">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Achievement Logger - Dune Uprising</title>
-  <style>
-    :root {
-      --bg: #f7f7f8;
-      --card: #ffffff;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --border: #e5e7eb;
-      --accent: #2563eb;
-      --accent-dark: #1d4ed8;
-      --danger: #dc2626;
-      --gold: #b7791f;
-      --gold-bg: #fff7ed;
-    }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#162b42">
+<title>7 Wonders · Civilisationernes pointtæller</title>
+<style>
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#f6efdf;background:#182735;font-synthesis:none}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 20% -10%,#34505b 0,transparent 47%),linear-gradient(180deg,#182735 0%,#101d2a 100%);padding:0 0 env(safe-area-inset-bottom)}button,input,select{font:inherit}button{cursor:pointer;-webkit-tap-highlight-color:transparent}button:disabled{opacity:.35;cursor:not-allowed}.shell{max-width:650px;margin:0 auto;padding:18px 15px 28px}.mast{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:3px 0 20px}.brand-kicker{font-size:10px;font-weight:800;letter-spacing:.34em;color:#dbb977}.brand{font-family:Georgia,'Times New Roman',serif;font-weight:bold;font-size:33px;letter-spacing:-1.2px;line-height:1.15;margin:2px 0 0}.brand span{color:#ebc47d}.mini-tag{border:1px solid #667381;border-radius:999px;color:#c6d1d6;font-size:11px;padding:6px 10px;white-space:nowrap}.panel{background:#f4ecd9;color:#22303a;border:1px solid #d6c29e;border-radius:22px;padding:19px 16px 20px;box-shadow:0 12px 45px #08101845}.eyebrow{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:#7c6a4d;font-weight:800}.panel h1{font-family:Georgia,'Times New Roman',serif;font-size:29px;line-height:1.12;margin:8px 0 10px;color:#26303c}.intro{font-size:14px;color:#677076;line-height:1.5;margin:0 0 17px}.section-top{display:flex;align-items:center;justify-content:space-between;margin:20px 0 10px}.section-title{font-weight:800;font-size:14px;color:#293844}.small-muted{font-size:12px;color:#718089}.count-control{display:flex;align-items:center;gap:12px;background:#fffaf1;padding:5px;border:1px solid #ded5c4;border-radius:14px}.count-control button{border:none;border-radius:9px;background:#efe4cf;width:35px;height:35px;font-size:21px;color:#243547;font-weight:700}.count-control strong{min-width:18px;text-align:center;font-variant-numeric:tabular-nums}.name-list{display:grid;gap:8px}.name-row{display:flex;gap:9px;align-items:center}.number-ball{width:28px;height:28px;display:grid;place-items:center;border-radius:50%;background:#e7d7b9;color:#4b493e;font-weight:800;font-size:12px;flex:none}.name-row input{min-width:0;flex:1;background:white;color:#22313b;border:1px solid #ddd3c0;border-radius:11px;padding:12px 11px;outline:none}.name-row input:focus{border-color:#a17b40;box-shadow:0 0 0 3px #b99b5d30}.expand-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.expansion{position:relative;display:flex;align-items:center;gap:8px;padding:14px 10px;background:#fff9f0;border:1.5px solid #e5dac8;border-radius:13px;color:#253344;min-height:67px;cursor:pointer}.expansion.is-on{border-color:#aa8a52;background:#f4e7ca;box-shadow:inset 0 0 0 1px #c3a36e}.expansion input{accent-color:#a58348;width:17px;height:17px;flex:none}.expansion .exp-emoji{font-size:20px}.expansion strong{font-size:13px;display:block}.expansion small{font-size:10px;color:#7b766b;display:block}.note{border-left:3px solid #c4a46c;padding:9px 11px;background:#ede2cc;border-radius:5px;color:#686358;font-size:12px;line-height:1.5;margin-top:14px}.btn{border:0;border-radius:13px;padding:14px 18px;display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:800;min-height:49px}.btn-primary{color:#192c36;background:linear-gradient(180deg,#f1d396,#d9ab5c);box-shadow:0 4px 0 #a1783c}.btn-secondary{border:1px solid #cfbf9e;background:#fff8ed;color:#334250}.btn-quiet{background:transparent;color:#71808d;border:1px solid #6979895c}.wide{width:100%}.setup-start{margin-top:20px}.setup-footer{margin-top:16px;text-align:center;font-size:11px;color:#91a2ab}.step-header{margin:0 0 18px}.top-links{display:flex;justify-content:space-between;align-items:center;gap:10px}.text-btn{background:none;border:0;color:#bcd2dc;font-size:12px;font-weight:700;padding:8px 0}.stage-progress{font-size:11px;color:#c5a978;font-weight:800;letter-spacing:.1em}.progress-track{height:5px;background:#415460;border-radius:9px;overflow:hidden;margin:9px 0 20px}.progress-inner{height:100%;background:linear-gradient(90deg,#c49951,#ffe0a2);transition:width .2s}.score-panel{padding:0;background:transparent;border:0;box-shadow:none;color:#f4ecdf}.stage-hero{padding:19px 19px 18px;background:#f4ecd9;border-radius:20px 20px 0 0;color:#27333e;position:relative;overflow:hidden}.stage-hero:after{content:'VII';font-family:Georgia,serif;font-size:112px;font-weight:bold;position:absolute;right:-5px;top:-27px;opacity:.045;pointer-events:none}.hero-title-row{display:flex;gap:12px;align-items:center}.hero-glyph{font-size:30px;display:grid;place-items:center;width:57px;height:57px;flex:none;background:var(--tint,#ddd);border-radius:15px}.stage-hero h1{font-family:Georgia,serif;margin:0;font-size:25px;color:#28333c}.stage-sub{font-size:13px;line-height:1.45;color:#636e73;margin-top:13px}.stage-tip{font-size:12px;color:#706b59;background:#ebe0cb;border-radius:9px;padding:10px 12px;line-height:1.5;margin-top:12px}.cards{background:#eee5d3;padding:10px 10px 11px;border-radius:0 0 20px 20px;display:grid;gap:9px}.score-card{background:#fffaf1;border:1px solid #d9cbb4;border-radius:14px;padding:14px 13px}.player-card-top{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:13px}.player-name{font-size:15px;font-weight:800;color:#2f3a41;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.score-chip{font-weight:900;font-size:19px;font-variant-numeric:tabular-nums;color:#304252;white-space:nowrap}.score-chip span{font-size:11px;font-weight:700;color:#7f8585}.counter-row{display:flex;align-items:stretch;gap:7px}.score-field{background:#fff;border:1.5px solid #d4c7b0;outline:0;border-radius:11px;width:81px;min-width:60px;text-align:center;font-size:21px;font-weight:850;color:#2a3b46;padding:12px 6px;font-variant-numeric:tabular-nums;appearance:textfield}.score-field::-webkit-outer-spin-button,.score-field::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}.score-field:focus{border-color:#bb9a60;box-shadow:0 0 0 3px #bb9a6040}.quick-buttons{flex:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.quick-buttons button{border-radius:10px;background:#eee4d1;border:1px solid #ddcfb6;color:#554a39;font-weight:800;padding:10px 2px;font-size:13px;min-height:44px}.quick-buttons button:active,.mini-step:active{transform:scale(.96)}.quick-buttons button.negative{color:#913a35;background:#f8e4de}.quick-buttons button:focus-visible,.btn:focus-visible{outline:3px solid #b98d41;outline-offset:2px}.counter-note{font-size:11px;color:#7f7e72;margin-top:8px}.mini-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.mini-grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}.mini-label{color:#646a6c;font-size:11px;font-weight:800;margin-bottom:6px}.mini-counter{display:flex;align-items:center;justify-content:space-between;gap:3px;background:#f1e8d7;border-radius:10px;padding:4px}.mini-step{border:0;border-radius:7px;background:white;color:#3c5060;font-size:21px;font-weight:900;width:32px;min-height:35px;display:grid;place-items:center;padding:0}.mini-num{font-size:18px;font-weight:850;color:#263b4a;min-width:15px;text-align:center;font-variant-numeric:tabular-nums}.mini-divider{height:1px;background:#e6dac5;margin:13px 0}.stamp-line{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:9px;font-size:12px;color:#6c716d}.age-toggle{display:flex;align-items:center;gap:9px;border-radius:10px;padding:9px 10px;background:#f1e9db;margin-bottom:7px;font-size:12px;font-weight:700}.age-toggle input{accent-color:#a25743;width:19px;height:19px}.age-toggle em{font-size:11px;font-style:normal;color:#a84438;margin-left:auto}.score-bottom{position:sticky;bottom:0;z-index:5;max-width:650px;margin:16px -15px -28px;padding:12px 15px calc(13px + env(safe-area-inset-bottom));background:linear-gradient(180deg,#142432f5,#0f1d2afc);border-top:1px solid #53616a;display:flex;gap:8px}.score-bottom .btn{flex:1;white-space:nowrap}.score-bottom .btn-primary{flex:2}.results-hero{text-align:center;margin:5px 0 18px}.laurel{font-size:38px}.results-hero h1{font-family:Georgia,serif;margin:6px 0 5px;font-size:29px;color:#283640}.results-hero p{font-size:13px;color:#67737a;margin:0}.winner-label{text-align:center;color:#a37b3a;font-weight:800;letter-spacing:.16em;font-size:10px;text-transform:uppercase}.winner-name{font-family:Georgia,serif;font-size:27px;text-align:center;margin:5px 0;color:#263441}.ranking{display:grid;gap:8px}.rank-row{border:1px solid #ddd1bc;background:#fff9ef;border-radius:13px;padding:13px 12px;display:flex;align-items:center;gap:12px}.rank-row.first{background:#f4e1ba;border-color:#d1ae67}.rank-num{border-radius:50%;background:#e8dfcf;width:32px;height:32px;display:grid;place-items:center;font-weight:900;font-size:13px;flex:none}.first .rank-num{background:#c59742;color:#fff}.rank-name{font-size:15px;font-weight:800;flex:1;overflow:hidden;text-overflow:ellipsis}.rank-detail{font-size:10px;color:#7a8080;margin-top:3px}.rank-pts{font-weight:900;font-size:23px;font-variant-numeric:tabular-nums;color:#2b4050}.rank-pts small{font-size:10px;color:#7a7b77}.result-section{margin-top:20px}.result-table-scroll{overflow:auto;margin-top:10px;border-radius:11px;border:1px solid #d8cdbb;background:white}.result-table{border-collapse:collapse;width:100%;font-size:12px}.result-table th{background:#e8dac0;color:#4a4b49;text-align:right;font-size:12px;padding:11px 12px;white-space:nowrap}.result-table th:first-child{text-align:left}.result-table td{padding:11px 12px;border-top:1px solid #eee6d8;text-align:right;font-variant-numeric:tabular-nums}.result-table td:first-child{text-align:left;font-weight:650;color:#505b62}.result-table tr.total td{font-weight:900;background:#f2e9d7;font-size:13px;color:#273c4c}.results-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:17px}.results-actions .btn{font-size:12px;padding:11px 8px}.toast{position:fixed;left:50%;bottom:95px;transform:translateX(-50%);background:#263847;color:white;padding:11px 17px;border-radius:999px;font-weight:700;font-size:12px;box-shadow:0 10px 30px #0004;z-index:30;display:none}.toast.show{display:block}.team-select{background:white;border:1px solid #ddd3c0;border-radius:9px;color:#384a58;padding:10px 6px;font-size:12px;max-width:90px}.team-wins{display:grid;gap:6px;margin-top:11px}.team-win{border:1px solid #dec99f;background:#fff4df;border-radius:11px;padding:10px 12px;display:flex;justify-content:space-between;font-weight:800;font-size:13px}.team-win span{font-size:18px}.visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}.muted-legend{font-size:11px;color:#a7b8c0;line-height:1.5;margin:15px 6px 0;text-align:center}
+/* Foreløbig samlet stilling under scoringen */
+.live-board{background:#233847;border:1px solid #4b6677;border-radius:15px;padding:12px;margin:0 0 13px;box-shadow:0 8px 24px #101a273b}
+.live-board-head{display:flex;align-items:center;justify-content:space-between;gap:9px;margin-bottom:9px}
+.live-board-title{font-size:13px;color:#efd29b;font-weight:850;letter-spacing:.02em}
+.live-board-note{font-size:10px;color:#b8c7d0;white-space:nowrap}
+.live-board-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+.live-person{display:flex;align-items:center;gap:6px;padding:8px;background:#162936;border:1px solid #425c6a;border-radius:9px;min-width:0}
+.live-person.first{background:#453c2e;border-color:#9b7c46}
+.live-rank{flex:none;width:16px;color:#d6b879;font-size:11px;font-weight:800}
+.live-name{color:#e7eff0;font-size:12px;font-weight:750;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0}
+.live-points{color:#f2d195;font-variant-numeric:tabular-nums;font-size:17px;font-weight:900;white-space:nowrap}
+@media(min-width:550px){.live-board-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(min-width:550px){.shell{padding-top:29px}.cards{grid-template-columns:1fr 1fr}.score-card{min-height:125px}.mini-grid.three .mini-step{width:29px}.panel{padding:23px}.score-bottom{margin-left:-15px;margin-right:-15px}}
+@media(max-width:370px){.brand{font-size:28px}.mini-grid.three{gap:4px}.mini-step{width:28px}.score-card{padding:12px 10px}.score-bottom .btn{padding:12px 8px;font-size:13px}.quick-buttons{gap:4px}}
+/* Tilfældige vidundere på startsiden */
+.wonder-draw{background:linear-gradient(155deg,#fff9ee,#eee0c5);border:1px solid #d8bc86;border-radius:16px;margin-top:19px;padding:14px 12px 12px}
+.wonder-draw-header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.wonder-draw-title{font-family:Georgia,serif;font-size:18px;font-weight:800;color:#2b3b46}
+.wonder-draw-subtitle{font-size:11px;color:#82755e;margin-top:3px}
+.wonder-reroll{min-height:38px;padding:8px 11px;font-size:12px;white-space:nowrap;border-radius:10px}
+.wonder-assignments{display:grid;gap:7px}
+.wonder-assignment{display:flex;align-items:center;gap:10px;background:#fffaf0;border:1px solid #e2d4bd;padding:10px 11px;border-radius:11px;min-width:0}
+.wonder-player{flex:0 1 43%;font-size:12px;font-weight:750;color:#546068;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.wonder-assigned{flex:1;min-width:0;text-align:right}
+.wonder-assigned strong{display:block;font-size:13px;color:#2c3d49;overflow-wrap:anywhere}
+.wonder-assigned small{display:block;font-size:10px;color:#907446;margin-top:2px}
+.player-wonder-label{font-size:10px;color:#947a50;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player-card-ident{min-width:0;flex:1}
+@media(max-width:370px){.wonder-draw-title{font-size:16px}.wonder-reroll{padding:8px}.wonder-assignment{gap:5px}.wonder-player{flex-basis:40%}}
 
-    * {
-      box-sizing: border-box;
-    }
+/* ================================================================
+   7 WONDERS · CLASSICAL EDITION
+   Original decorative vector art, classical typography, papyrus & bronze.
+   Additive visual layer over the original scorekeeper logic.
+   ================================================================ */
+:root{
+  --night:#14283a;--night2:#1c3850;--ink:#26333a;--gold:#e9bf79;
+  --gold-dark:#986b37;--parchment:#f5eedb;--border-gold:#c3a16c;
+  font-family:Georgia,'Times New Roman',serif;color:#f9e8c9;background:#152b3e;
+}
+html{background:#132638}
+body{
+ background:
+  radial-gradient(ellipse at 48% 0%,rgba(178,110,79,.5),transparent 46%),
+  radial-gradient(ellipse at 96% 30%,rgba(42,91,115,.28),transparent 45%),
+  linear-gradient(175deg,#1c3448 0%,#172b3c 56%,#102130 100%);
+ color:#f5e9d5;
+ font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.15;z-index:0;background-image:repeating-linear-gradient(90deg,transparent 0 88px,rgba(248,219,171,.12) 89px,transparent 90px),repeating-linear-gradient(0deg,transparent 0 86px,rgba(236,212,169,.08) 87px,transparent 88px);mask-image:linear-gradient(180deg,transparent,#000 30%,#000 78%,transparent)}
+.shell{position:relative;max-width:780px;margin:0 auto;padding:19px 18px 32px}
+.mast{height:251px;margin:0 0 23px;position:relative;overflow:hidden;border:1px solid #cba872;border-radius:6px;box-shadow:0 20px 54px #090e17aa,0 0 0 5px #9e784026;background:#263d54;display:block}
+.mast:before{content:"";position:absolute;inset:7px;border:1px solid #e9c08c66;z-index:4;pointer-events:none}
+.mast:after{content:"✦";position:absolute;left:18px;top:15px;z-index:4;color:#e8c18e;font-size:13px}
+.city-art{width:100%;height:100%;position:absolute;inset:0;display:block}
+.mast-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(9,24,42,.8) 0%,rgba(15,33,50,.55) 46%,rgba(17,32,46,.10) 100%),linear-gradient(0deg,#152a3edb,transparent 40%)}
+.mast-inner{position:absolute;left:39px;top:38px;z-index:3;max-width:86%}
+.mast-eyebrow{font:700 9px/1.3 system-ui,sans-serif;letter-spacing:.30em;color:#ffdfad}
+.brand{display:flex;align-items:baseline;gap:5px;margin:5px 0 -10px;line-height:1;font-family:Georgia,'Times New Roman',serif;color:#f5d199;filter:drop-shadow(0 3px 1px #15283d);font-weight:700}
+.brand-seven{font-size:clamp(76px,14vw,114px);font-weight:500;font-style:italic;letter-spacing:-.11em;color:#f9d795;text-shadow:1px 1px #745032,2px 3px #2a3646}
+.brand-word{font-size:clamp(35px,8vw,67px);font-weight:600;letter-spacing:-.06em;color:#f0ca8b;text-shadow:1px 2px #764e31,2px 4px #223041}
+.brand-divider{display:flex;align-items:center;gap:12px;color:#efc88a;width:260px;max-width:87%;margin:0 0 10px 34px}
+.brand-divider i{height:1px;flex:1;background:linear-gradient(90deg,transparent,#e9c18b,transparent)}
+.brand-tagline{font:750 10px/1.4 system-ui,sans-serif;letter-spacing:.14em;color:#f8e2bd;margin-left:29px}
+.mast-era{position:absolute;right:23px;bottom:18px;color:#ffe2ad;font:700 13px Georgia,serif;letter-spacing:.15em;text-shadow:0 2px #101c2d}
+.mast-era b{opacity:.6}
+.panel{
+ background:
+  radial-gradient(ellipse at 10% 4%,rgba(255,255,255,.63),transparent 48%),
+  repeating-linear-gradient(50deg,rgba(100,79,52,.012) 0 2px,transparent 3px 9px),
+  linear-gradient(130deg,#f7f0df,#ebddc2);
+ border:1px solid #c8a879;border-radius:8px;padding:27px 28px 29px;
+ box-shadow:0 14px 0 -9px #b8945d,0 22px 55px #0b15249e;
+ position:relative;color:#283440;
+}
+.panel:before{content:"";pointer-events:none;position:absolute;inset:8px;border:1px solid #9e7b493d;border-radius:3px}
+.panel h1{font-family:Georgia,serif;font-size:35px;font-weight:700;letter-spacing:-.03em;color:#2b3e48;line-height:1.12;margin:8px 0 9px}
+.eyebrow{color:#9b743f;letter-spacing:.20em;font-size:10px;font-weight:900}
+.intro{color:#6c706c;font-size:13px;line-height:1.7;margin-bottom:22px;max-width:620px}
+.section-title{font:700 17px Georgia,serif;color:#36434b}
+.section-top{border-bottom:1px solid #b5976838;padding-bottom:7px;margin:24px 0 13px}
+.small-muted{color:#857a6a;font-size:12px}
+.number-ball{width:29px;height:29px;background:linear-gradient(160deg,#c6a267,#9f7845);color:#fff7df;border:1px solid #e5c491;border-radius:50%;box-shadow:inset 0 1px 2px #ffdd96a6}
+.name-row input,.team-select{font:600 14px system-ui,sans-serif;border-radius:5px;background:#fffaf0;border:1px solid #c9b28a;color:#354451;min-height:46px}
+.name-row input:focus{border-color:#ae7f42;box-shadow:0 0 0 3px #dfbd7948}
+.count-control{background:#e8dcc7;border-color:#c5aa7c;border-radius:6px}
+.count-control button{border-radius:4px;background:#fcf5e7;color:#7f552a;box-shadow:0 2px 0 #a98f67;min-width:39px;min-height:40px}
+.count-control strong{font-size:18px;color:#413b37;font-weight:900}
+.expand-grid{gap:9px}
+.expansion{background:#fff7e8;border:1px solid #d6c4a1;border-radius:6px;min-height:79px;padding:12px 12px;box-shadow:0 3px 0 -1px #c3ab84}
+.expansion.is-on{background:linear-gradient(135deg,#ead4a7,#e5c98f);border-color:#98703b;box-shadow:inset 0 0 0 2px #f8eed3,0 2px 0 #a78248}
+.expansion input{accent-color:#91652c;width:18px;height:18px}
+.expansion strong{font:700 15px Georgia,serif;color:#34414b}
+.expansion small{font-size:10px;margin-top:4px;color:#80735f;line-height:1.2}
+.expansion .exp-emoji{font-size:24px;filter:saturate(.8)}
+.note{border-left:3px solid #aa8751;color:#766548;background:#ebdfc6;padding:12px 14px;border-radius:3px;font-size:12px}
+.btn{font-family:system-ui,-apple-system,sans-serif;letter-spacing:.015em;border-radius:5px;font-size:14px;font-weight:800;transition:filter .1s,transform .1s;min-height:49px}
+.btn:active{transform:translateY(2px)}
+.btn-primary{border:1px solid #efcd8d;color:#302e2b;background:linear-gradient(180deg,#f8dc9c 0%,#dfb56f 50%,#c89650 100%);box-shadow:inset 0 1px 0 #fff1c3,0 4px 0 #7c562d,0 6px 13px #33251c36}
+.btn-primary:hover{filter:brightness(1.06)}
+.btn-secondary{background:#f7f0e1;border:1px solid #bc9c6b;box-shadow:inset 0 1px 0 #fff8e8;color:#66523b}
+.btn-quiet{background:transparent;color:#e4d2b4;border:1px solid #aa8b5b96}
+.wonder-draw{border-radius:5px;border:1px solid #bc9459;background:linear-gradient(140deg,#f4e7c9,#e5d2a9);box-shadow:inset 0 0 0 4px #ffefce5e;padding:20px;margin-top:24px}
+.wonder-draw-title{font:700 23px Georgia,serif;color:#4a4035}
+.wonder-draw-subtitle{color:#826b51;font-size:11px;margin-top:5px}
+.wonder-assignment{border-radius:5px;border:1px solid #d0ba90;background:#faf3e3;padding:12px}
+.wonder-player{font-weight:750;color:#545758}
+.wonder-assigned strong{font:700 16px Georgia,serif;color:#745630}
+.wonder-assigned small{color:#9a835f}
+.muted-legend,.setup-footer{font-size:11px;color:#c4b7a1;line-height:1.6}
+.setup-footer{letter-spacing:.015em;padding:8px 4px}
+/* The living standings become an engraved navy scoretablet. */
+.top-links{padding:0 3px}
+.text-btn{font-size:12px;color:#ead1a7;min-height:38px}
+.stage-progress{color:#f0ce90;font-size:11px;letter-spacing:.19em}
+.progress-track{height:5px;margin:4px 0 17px;background:#445260;border-radius:0;border:1px solid #c39e5c50}
+.progress-inner{background:linear-gradient(90deg,#b17c43,#f0ce92,#fff1c5);border-radius:0}
+.live-board{border:1px solid #b78e58;border-radius:5px;background:linear-gradient(145deg,#1c3547,#172b3c);box-shadow:inset 0 0 0 4px #26475c,0 10px 25px #09182780;padding:15px;margin:0 0 18px}
+.live-board-title{font:700 17px Georgia,serif;color:#f4d4a0;letter-spacing:0}
+.live-board-note{color:#aebfba;font-size:10px}
+.live-board-grid{gap:8px}
+.live-person{border:1px solid #63747b;border-radius:4px;background:#21394b;padding:10px;min-height:43px}
+.live-person.first{border-color:#e0b873;background:linear-gradient(105deg,#6c5339,#3d453f)}
+.live-rank{color:#f3d39b;font:700 14px Georgia,serif;width:21px}
+.live-name{color:#eee2cc;font-size:12px}
+.live-points{color:#f4d091;font:800 20px Georgia,serif}
+.score-panel{background:transparent;border:0;box-shadow:none;padding:0;color:#efe3ce}
+.stage-hero{position:relative;overflow:hidden;border:1px solid #c7a374;border-bottom:0;border-radius:7px 7px 0 0;background:linear-gradient(115deg,#f6eddb,#e6d5b8);padding:23px 23px 21px;box-shadow:inset 0 3px 0 var(--category-accent,#b0a48e)}
+.stage-hero:before{content:"";position:absolute;right:-20px;top:-20px;width:160px;height:160px;background:var(--category-accent,#c7b89c);opacity:.25;border-radius:50%;filter:blur(28px)}
+.stage-hero:after{content:'Ⅲ';font-size:130px;color:#c3a16b;right:15px;top:-30px;opacity:.085}
+.hero-title-row{position:relative;z-index:1;align-items:center;gap:16px}
+.hero-glyph{width:66px;height:76px;flex:none;font-size:31px;border-radius:5px;background:linear-gradient(160deg,var(--category-accent),#f9f0dd) !important;border:1px solid #b99b6b;box-shadow:inset 0 0 0 3px #fffaee8a,0 4px 0 #bba47e}
+.stage-hero h1{font-family:Georgia,serif;color:#303f4b;font-size:34px;letter-spacing:-.04em}
+.stage-sub{font-size:13px;line-height:1.6;color:#5c676b;position:relative;margin-top:19px}
+.stage-tip{background:#e6d8be;border:1px solid #ddc5a3;border-radius:4px;padding:11px 13px;color:#78664c;font-size:12px;position:relative}
+.cards{border:1px solid #c7a374;border-top:0;border-radius:0 0 7px 7px;padding:13px;background:linear-gradient(150deg,#eaddc5,#d7c4a2);gap:10px}
+.score-card{background:linear-gradient(160deg,#fffaf0,#f6eddb);border:1px solid #c9ad83;border-radius:5px;padding:16px 15px;box-shadow:0 3px 0 #b29a74;min-width:0}
+.player-name{font:700 17px Georgia,serif;color:#2e3e49}
+.player-wonder-label{color:#976e3d;font-size:10px}
+.score-chip{font:700 24px Georgia,serif;color:#7b562b}
+.score-chip span{font:700 11px system-ui,sans-serif;color:#8a7765}
+.score-field{border:1px solid #be9f6e;border-radius:4px;background:#fffdf6;color:#3b4042;font:700 23px Georgia,serif;box-shadow:inset 0 2px 2px #73582c13}
+.score-field:focus{border-color:#a5783e;box-shadow:0 0 0 3px #a77c3c44}
+.quick-buttons button{border:1px solid #bca67f;background:linear-gradient(180deg,#f6ecda,#e0cfb1);border-radius:4px;box-shadow:0 2px 0 #ac946f;color:#58452e;min-height:46px;font-weight:800}
+.quick-buttons button.negative{background:linear-gradient(180deg,#f8e9e0,#efd4c7);color:#903f30;border-color:#d1a18e}
+.mini-label{color:#786343;font-size:12px}
+.mini-counter{background:#e8d9bf;border:1px solid #d5bd99;border-radius:4px}
+.mini-step{border-radius:3px;color:#694b2b;border:1px solid #ccb58c;background:#fffaec}
+.mini-num{color:#35444d;font-family:Georgia,serif}
+.age-toggle{border-radius:4px;background:#eee0c8}
+.age-toggle input{accent-color:#9a6b3c}
+.counter-note{color:#887660}
+.score-bottom{max-width:780px;background:linear-gradient(180deg,#1f374adf,#15283af9);border-top:1px solid #bb965b;padding-top:13px;backdrop-filter:blur(12px)}
+.results-hero{padding:6px 0 10px}
+.results-hero h1{font:700 36px Georgia,serif}
+.laurel{color:#a77a3d;font-size:52px;line-height:1}
+.winner-label{font-size:11px;color:#9f7540}
+.winner-name{font:700 32px Georgia,serif;color:#513f30;margin:7px 0 19px}
+.rank-row{border-radius:5px;border:1px solid #d2b98d;background:linear-gradient(100deg,#fbf2df,#f4e8d2);box-shadow:0 2px 0 #bda67e}
+.rank-row.first{border-color:#b9904a;background:linear-gradient(100deg,#f5db9f,#e8c88a)}
+.rank-num{background:#e5d3b4;color:#76562e;border-radius:50%;font-family:Georgia,serif;font-size:17px}
+.first .rank-num{background:#8f642a;border:1px solid #e6c37d;color:#fff0ce}
+.rank-name{font:700 17px Georgia,serif;color:#35424b}
+.rank-detail{color:#7b776c}
+.rank-pts{font:700 26px Georgia,serif;color:#76542d}
+.result-section .section-title{margin-bottom:8px}
+.result-table-scroll{border-radius:4px;border:1px solid #ba9b68}
+.result-table th{background:#d9c29a;color:#57462c;font-family:Georgia,serif;font-size:13px}
+.result-table tr.total td{background:#e3cfa8;color:#493b2d}
+.result-table td{border-top:1px solid #e7d9bf}
+.team-win{border-radius:5px}
+.toast{background:#273f4b;border:1px solid #d4ac72;border-radius:5px}
+@media(min-width:550px){.shell{padding-top:28px}.mast{height:265px}.cards{grid-template-columns:repeat(2,minmax(0,1fr))}.score-card{min-height:135px}.panel{padding:30px}.score-bottom{margin-left:-18px;margin-right:-18px}.live-board-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:549px){
+ .shell{padding:10px 12px 25px}.mast{height:199px;margin-bottom:15px}.mast-inner{left:20px;top:38px}.mast-eyebrow{font-size:8px;letter-spacing:.17em}.brand{gap:2px;margin-bottom:-5px}.brand-seven{font-size:79px}.brand-word{font-size:clamp(32px,9vw,43px)}.brand-divider{margin-left:16px;width:190px}.brand-tagline{font-size:8px;margin-left:14px;letter-spacing:.075em}.mast-era{font-size:10px;right:14px;bottom:15px}
+ .panel{padding:19px 16px 22px}.panel h1{font-size:31px}.section-title{font-size:17px}.expansion{min-height:75px;padding:9px 7px}.expansion .exp-emoji{font-size:22px}.expansion strong{font-size:14px}.expansion small{font-size:9px}.wonder-draw{padding:14px 11px}.wonder-draw-title{font-size:19px}.wonder-reroll{font-size:11px;padding:9px 8px}.wonder-assignment{gap:7px}.wonder-assigned strong{font-size:14px}
+ .live-board{padding:11px 10px}.live-board-note{font-size:9px;max-width:145px;text-align:right;white-space:normal;line-height:1.2}.live-board-grid{gap:6px}.live-person{padding:7px}.live-points{font-size:17px}
+ .stage-hero{padding:17px 16px 16px}.hero-glyph{width:57px;height:62px;font-size:27px}.stage-hero h1{font-size:28px}.stage-sub{margin-top:14px}.cards{padding:8px;grid-template-columns:1fr}.score-card{padding:13px}.score-bottom{margin:14px -12px -25px;padding:11px 12px calc(14px + env(safe-area-inset-bottom))}.score-bottom .btn{padding:11px 9px;font-size:12px}.score-bottom .btn-primary{flex:1.6}
+ .rank-row{gap:8px;padding:11px 9px}.rank-name{font-size:15px}.rank-detail{font-size:10px}.rank-pts{font-size:24px}
+}
+@media(max-width:365px){.brand-word{font-size:31px}.mast-inner{left:15px}.brand-seven{font-size:68px}.panel{padding:17px 12px}.quick-buttons{gap:4px}.quick-buttons button{font-size:12px;padding:8px 0}.score-field{width:65px}.expansion strong{font-size:12px}.expansion .exp-emoji{font-size:19px}}
+@media(prefers-reduced-motion:reduce){.btn,.quick-buttons button{transition:none}}
 
-    body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
-    }
 
-    main {
-      width: min(1040px, 92vw);
-      margin: 48px auto;
-    }
-
-    header {
-      margin-bottom: 24px;
-    }
-
-    h1 {
-      margin: 0 0 8px;
-      font-size: 2.25rem;
-      letter-spacing: -0.04em;
-    }
-
-    p {
-      margin: 0;
-      color: var(--muted);
-    }
-
-    .dashboard {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 22px;
-    }
-
-    .panel,
-    .achievement-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 22px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-    }
-
-    .panel h2,
-    .achievement-card h2 {
-      margin: 0 0 10px;
-      font-size: 1.2rem;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-    }
-
-    .stat {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
-      background: #fff;
-    }
-
-    .stat strong {
-      display: block;
-      font-size: 1.4rem;
-    }
-
-    .stat span {
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
-
-    .leaderboard {
-      display: grid;
-      gap: 8px;
-    }
-
-    .leaderboard-row {
-      display: grid;
-      grid-template-columns: 36px 1fr auto;
-      gap: 10px;
-      align-items: center;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 9px 11px;
-      background: #fff;
-    }
-
-    .leaderboard-row:first-child {
-      background: var(--gold-bg);
-      border-color: #fed7aa;
-    }
-
-    .rank {
-      font-weight: 800;
-      color: var(--gold);
-    }
-
-    .score {
-      color: var(--muted);
-      font-weight: 700;
-    }
-
-    .recent-list,
-    .achievement-list {
-      display: grid;
-      gap: 18px;
-    }
-
-    .recent-item {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 10px 12px;
-      background: #fff;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .recent-item strong {
-      color: var(--text);
-    }
-
-    .achievement-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: start;
-      gap: 16px;
-      margin-bottom: 18px;
-    }
-
-    .achievement-title {
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .badge {
-      display: inline-grid;
-      place-items: center;
-      width: 34px;
-      height: 34px;
-      border-radius: 999px;
-      background: var(--gold-bg);
-      color: var(--gold);
-      font-weight: 900;
-      border: 1px solid #fed7aa;
-      flex: 0 0 auto;
-    }
-
-    .count {
-      color: var(--muted);
-      font-size: 0.95rem;
-      white-space: nowrap;
-    }
-
-    form {
-      display: grid;
-      grid-template-columns: 1fr 180px 180px auto;
-      gap: 12px;
-      align-items: end;
-      margin-bottom: 18px;
-    }
-
-    label {
-      display: block;
-      font-weight: 600;
-      font-size: 0.85rem;
-      margin-bottom: 5px;
-    }
-
-    input,
-    select {
-      width: 100%;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 9px 10px;
-      font: inherit;
-      color: var(--text);
-      background: #fff;
-    }
-
-    input:focus,
-    select:focus {
-      outline: 2px solid rgba(37, 99, 235, 0.18);
-      border-color: var(--accent);
-    }
-
-    button {
-      border: 0;
-      border-radius: 10px;
-      padding: 9px 12px;
-      font: inherit;
-      font-weight: 700;
-      cursor: pointer;
-    }
-
-    button:disabled {
-      cursor: not-allowed;
-      opacity: 0.65;
-    }
-
-    .primary-button {
-      background: var(--accent);
-      color: #fff;
-      white-space: nowrap;
-    }
-
-    .primary-button:hover {
-      background: var(--accent-dark);
-    }
-
-    .completion-list {
-      display: grid;
-      gap: 8px;
-    }
-
-    .completion {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 10px 12px;
-      background: #fff;
-    }
-
-    .completion-info {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
-    .completion-info strong {
-      color: var(--text);
-    }
-
-    .delete-button {
-      background: transparent;
-      color: var(--danger);
-      padding: 4px 8px;
-      font-size: 0.9rem;
-    }
-
-    .delete-button:hover {
-      background: #fee2e2;
-    }
-
-    .empty-state {
-      color: var(--muted);
-      border: 1px dashed var(--border);
-      border-radius: 10px;
-      padding: 14px;
-      text-align: center;
-      background: #fff;
-    }
-
-    .status {
-      margin-top: 12px;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
-
-    .refresh-button {
-      margin-top: 10px;
-      background: #fff;
-      border: 1px solid var(--border);
-      color: var(--text);
-    }
-
-    .refresh-button:hover {
-      background: #f3f4f6;
-    }
-
-    @media (max-width: 900px) {
-      .dashboard {
-        grid-template-columns: 1fr;
-      }
-
-      form {
-        grid-template-columns: 1fr;
-      }
-
-      .achievement-header,
-      .completion {
-        align-items: stretch;
-        flex-direction: column;
-      }
-
-      .count {
-        white-space: normal;
-      }
-    }
-  </style>
+/* Fast, discoverable new-game action; same scoring logic across all screens */
+.setup-title-bar{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:4px 0 8px}
+.setup-title-bar h1{margin:3px 0 5px}
+.btn-newgame-mini{min-height:40px;padding:9px 12px;border:1px solid #ae9263;border-radius:5px;background:#f6e9cd;color:#634626;font-size:12px;font-weight:800;white-space:nowrap;box-shadow:0 2px 0 #c7ae7e}
+.btn-newgame-mini:focus-visible,.new-game-link:focus-visible{outline:3px solid #c99958;outline-offset:3px}
+.btn-newgame-mini.dark{color:#f1d397;background:#1d3546;border-color:#886a45;box-shadow:none}
+.newgame-actions{display:flex;justify-content:flex-end;margin-top:-9px;margin-bottom:9px}
+.new-game-link{color:#f2d396}
+.new-game-hint{font-size:12px;line-height:1.45;color:#746e63;margin:15px 2px 3px;text-align:center}
+@media(max-width:549px){.setup-title-bar{align-items:center}.setup-title-bar h1{font-size:29px;flex:1}.btn-newgame-mini{min-height:40px;padding:8px 9px}}
+</style>
 </head>
 <body>
-  <main>
-    <header>
-      <h1>Achievement Logger - Dune Uprising</h1>
-      <p>Select an achievement and log who completed it, when, and with which leader.</p>
-      <div class="status" id="syncStatus">Loading shared data...</div>
-      <button class="refresh-button" id="refreshButton" type="button">Refresh data</button>
-    </header>
-
-    <section class="dashboard">
-      <div class="panel">
-        <h2>Leaderboard</h2>
-        <div id="leaderboard" class="leaderboard"></div>
-      </div>
-
-      <div class="panel">
-        <h2>Overview</h2>
-        <div class="stats">
-          <div class="stat">
-            <strong id="totalCompletions">0</strong>
-            <span>Total completions</span>
-          </div>
-          <div class="stat">
-            <strong id="totalPlayers">0</strong>
-            <span>Players</span>
-          </div>
-          <div class="stat">
-            <strong id="completedTypes">0/8</strong>
-            <span>Achievements hit</span>
-          </div>
-        </div>
-        <h2 style="margin-top: 18px;">Recent activity</h2>
-        <div id="recentActivity" class="recent-list"></div>
-      </div>
-    </section>
-
-    <section id="achievementList" class="achievement-list"></section>
-  </main>
-
-  <script>
-    const API_URL = "https://script.google.com/macros/s/AKfycbyvt_19cwIVXTmPgbtML9LJ7tSPNgKhd4UEFCcpJFDNGWoGbo2-NPDSQsaJkuhnCt8s7g/exec";
-
-    const leaders = [
-      "AMBER",
-      "ARIANA",
-      "ARMAND ECAZ",
-      "BARON",
-      "CHANI",
-      "DUNCAN",
-      "ESMAR",
-      "FEYD",
-      "GURNEY",
-      "HASIMIR",
-      "ILESA",
-      "ILBAN",
-      "IRULAN",
-      "JESSICA",
-      "KOTA",
-      "LETO",
-      "LIET",
-      "MARGOT",
-      "MOHIAM",
-      "MUAD'DIB",
-      "PAUL ATREIDES",
-      "PITER",
-      "RHOMBUR",
-      "SHADDAM",
-      "STABAN",
-      "TESSIA",
-      "YUNA",
-      "YRKOON"
-    ];
-
-    const achievements = [
-      { id: "a1", name: "Buy two spice must flow on the same turn" },
-      { id: "a2", name: "Buy 5 spice must flow in the same game" },
-      { id: "a3", name: "End the game with 6 or more techs" },
-      { id: "a4", name: "Have 4 or more worms in the same conflict" },
-      { id: "a5", name: "Have 45 or more combat strength in one combat" },
-      { id: "a6", name: "Get 5 points in one round" },
-      { id: "a7", name: "End the game with 15 or more points" },
-      { id: "a8", name: "Win the game in round 5" }
-    ];
-
-    const achievementList = document.getElementById("achievementList");
-    const leaderboard = document.getElementById("leaderboard");
-    const recentActivity = document.getElementById("recentActivity");
-    const syncStatus = document.getElementById("syncStatus");
-    const refreshButton = document.getElementById("refreshButton");
-    const totalCompletions = document.getElementById("totalCompletions");
-    const totalPlayers = document.getElementById("totalPlayers");
-    const completedTypes = document.getElementById("completedTypes");
-
-    let completions = [];
-    let isLoading = false;
-
-    renderAll();
-    loadCompletions();
-
-    refreshButton.addEventListener("click", loadCompletions);
-
-    achievementList.addEventListener("submit", async function (event) {
-      event.preventDefault();
-
-      const form = event.target;
-      const achievementId = form.dataset.achievementId;
-      const formData = new FormData(form);
-      const achievement = achievements.find((item) => item.id === achievementId);
-
-      const button = form.querySelector("button");
-      button.disabled = true;
-      button.textContent = "Saving...";
-      syncStatus.textContent = "Saving...";
-
-      try {
-        await fetch(API_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "text/plain;charset=utf-8"
-          },
-          body: JSON.stringify({
-            action: "add",
-            id: createId(),
-            achievement: achievement.name,
-            player: formData.get("player").trim(),
-            leader: formData.get("leader"),
-            date: formData.get("date")
-          })
-        });
-
-        form.reset();
-        form.querySelector('input[name="date"]').value = today();
-        await loadCompletions();
-      } catch (error) {
-        alert("Could not save the achievement. Please try again.");
-        console.error(error);
-      } finally {
-        button.disabled = false;
-        button.textContent = "Add";
-      }
-    });
-
-    achievementList.addEventListener("click", async function (event) {
-      if (!event.target.matches(".delete-button")) return;
-
-      const id = event.target.dataset.id;
-      if (!confirm("Delete this completion?")) return;
-
-      const button = event.target;
-      button.disabled = true;
-      button.textContent = "Deleting...";
-      syncStatus.textContent = "Deleting...";
-
-      try {
-        await fetch(API_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "text/plain;charset=utf-8"
-          },
-          body: JSON.stringify({
-            action: "delete",
-            id
-          })
-        });
-
-        await loadCompletions();
-      } catch (error) {
-        alert("Could not delete the completion. Make sure your Apps Script supports delete.");
-        console.error(error);
-        button.disabled = false;
-        button.textContent = "Delete";
-      }
-    });
-
-    async function loadCompletions() {
-      if (isLoading) return;
-      isLoading = true;
-      refreshButton.disabled = true;
-      refreshButton.textContent = "Refreshing...";
-
-      try {
-        const response = await fetch(API_URL);
-        const rows = await response.json();
-
-        completions = rows.map((row, index) => {
-          const achievementName = row.Achievement || row.achievement || "";
-          const achievement = achievements.find((item) => item.name === achievementName);
-
-          return {
-            id: row.ID || row.Id || row.id || String(index),
-            achievementId: achievement ? achievement.id : "",
-            achievementName,
-            player: row.Player || row.player || "",
-            leader: row.Leader || row.leader || "",
-            date: formatSheetDate(row.Date || row.date || "")
-          };
-        })
-        .filter((completion) => completion.achievementId)
-        .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
-
-        renderAll();
-        syncStatus.textContent = `Synced ${new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" })}`;
-      } catch (error) {
-        renderAll();
-        syncStatus.textContent = "Could not sync with Google Sheets.";
-        console.error("Google Sheets load error:", error);
-      } finally {
-        isLoading = false;
-        refreshButton.disabled = false;
-        refreshButton.textContent = "Refresh data";
-      }
-    }
-
-    function renderAll() {
-      renderDashboard();
-      renderAchievements();
-    }
-
-    function renderDashboard() {
-      totalCompletions.textContent = completions.length;
-
-      const players = [...new Set(completions.map((item) => item.player).filter(Boolean))];
-      totalPlayers.textContent = players.length;
-
-      const achieved = new Set(completions.map((item) => item.achievementId));
-      completedTypes.textContent = `${achieved.size}/${achievements.length}`;
-
-      renderLeaderboard();
-      renderRecentActivity();
-    }
-
-    function renderLeaderboard() {
-      const scores = completions.reduce((acc, completion) => {
-        if (!completion.player) return acc;
-        acc[completion.player] = (acc[completion.player] || 0) + 1;
-        return acc;
-      }, {});
-
-      const rows = Object.entries(scores)
-        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
-        .slice(0, 8);
-
-      if (rows.length === 0) {
-        leaderboard.innerHTML = '<div class="empty-state">No players yet.</div>';
-        return;
-      }
-
-      leaderboard.innerHTML = rows.map(([player, score], index) => `
-        <div class="leaderboard-row">
-          <div class="rank">#${index + 1}</div>
-          <div><strong>${escapeHtml(player)}</strong></div>
-          <div class="score">${score}</div>
-        </div>
-      `).join("");
-    }
-
-    function renderRecentActivity() {
-      const recent = completions.slice(0, 5);
-
-      if (recent.length === 0) {
-        recentActivity.innerHTML = '<div class="empty-state">No recent activity yet.</div>';
-        return;
-      }
-
-      recentActivity.innerHTML = recent.map((completion) => `
-        <div class="recent-item">
-          <strong>${escapeHtml(completion.player)}</strong> completed
-          <strong>${escapeHtml(completion.achievementName)}</strong>
-          with ${escapeHtml(completion.leader)} on ${formatDate(completion.date)}.
-        </div>
-      `).join("");
-    }
-
-    function renderAchievements() {
-      achievementList.innerHTML = "";
-
-      achievements.forEach((achievement, index) => {
-        const achievementCompletions = completions.filter(
-          (completion) => completion.achievementId === achievement.id
-        );
-
-        const card = document.createElement("article");
-        card.className = "achievement-card";
-
-        card.innerHTML = `
-          <div class="achievement-header">
-            <div class="achievement-title">
-              <div class="badge">${index + 1}</div>
-              <div>
-                <h2>${escapeHtml(achievement.name)}</h2>
-                <p>${achievementCompletions.length === 0 ? "Waiting for first completion." : "Latest completions shown first."}</p>
-              </div>
-            </div>
-            <span class="count">${achievementCompletions.length} completed</span>
-          </div>
-
-          <form data-achievement-id="${achievement.id}">
-            <div>
-              <label for="player-${achievement.id}">Player</label>
-              <input id="player-${achievement.id}" name="player" type="text" required />
-            </div>
-
-            <div>
-              <label for="date-${achievement.id}">Date</label>
-              <input id="date-${achievement.id}" name="date" type="date" required value="${today()}" />
-            </div>
-
-            <div>
-              <label for="leader-${achievement.id}">Leader</label>
-              <select id="leader-${achievement.id}" name="leader" required>
-                <option value="">Choose leader</option>
-                ${leaders.map((leader) => `<option value="${escapeHtml(leader)}">${escapeHtml(leader)}</option>`).join("")}
-              </select>
-            </div>
-
-            <button class="primary-button" type="submit">Add</button>
-          </form>
-
-          <div class="completion-list">
-            ${renderCompletions(achievementCompletions)}
-          </div>
-        `;
-
-        achievementList.appendChild(card);
-      });
-    }
-
-    function renderCompletions(items) {
-      if (items.length === 0) {
-        return '<div class="empty-state">No completions logged yet.</div>';
-      }
-
-      return items.map((completion) => `
-        <div class="completion">
-          <div class="completion-info">
-            <strong>${escapeHtml(completion.player)}</strong> completed this on ${formatDate(completion.date)} with ${escapeHtml(completion.leader)}.
-          </div>
-          <button class="delete-button" type="button" data-id="${escapeHtml(completion.id)}">Delete</button>
-        </div>
-      `).join("");
-    }
-
-    function createId() {
-      if (crypto.randomUUID) return crypto.randomUUID();
-      return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
-    }
-
-    function today() {
-      return new Date().toISOString().slice(0, 10);
-    }
-
-    function formatSheetDate(value) {
-      if (!value) return "";
-
-      if (typeof value === "string" && /^\d{4}-\d{2}-\d{2}/.test(value)) {
-        return value.slice(0, 10);
-      }
-
-      const date = new Date(value);
-      if (Number.isNaN(date.getTime())) return value;
-
-      return date.toISOString().slice(0, 10);
-    }
-
-    function formatDate(dateString) {
-      if (!dateString) return "No date";
-      const date = new Date(dateString + "T00:00:00");
-      return date.toLocaleDateString(undefined, {
-        year: "numeric",
-        month: "short",
-        day: "numeric"
-      });
-    }
-
-    function escapeHtml(value) {
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-  </script>
+<div class="shell">
+<header class="mast" aria-label="7 Wonders pointtæller">
+  <svg class="city-art" viewBox="0 0 1000 320" preserveAspectRatio="xMidYMid slice" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+   <defs>
+    <linearGradient id="dawn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#19314d"/><stop offset=".52" stop-color="#3e5266"/><stop offset="1" stop-color="#b07660"/></linearGradient>
+    <radialGradient id="sunGlow" cx=".72" cy=".6" r=".5"><stop stop-color="#f7cc8a" stop-opacity=".72"/><stop offset="1" stop-color="#f7bb75" stop-opacity="0"/></radialGradient>
+    <linearGradient id="goldlight" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#eecb8e"/><stop offset="1" stop-color="#ab7153"/></linearGradient>
+    <linearGradient id="marble" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#38495a"/><stop offset=".45" stop-color="#a7998c"/><stop offset="1" stop-color="#635b60"/></linearGradient>
+    <linearGradient id="sea" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#ad796e"/><stop offset="1" stop-color="#344b59"/></linearGradient>
+   </defs>
+   <rect width="1000" height="320" fill="url(#dawn)"/>
+   <rect width="1000" height="320" fill="url(#sunGlow)"/>
+   <circle cx="768" cy="163" r="68" fill="#f4cb92" opacity=".52"/>
+   <g opacity=".38" fill="#b6aaa1"><path d="M0 186 L80 152 155 178 228 137 306 187 402 158 489 195 601 143 712 185 795 146 894 177 1000 136 1000 320 0 320Z"/></g>
+   <g opacity=".55" fill="#253b4c"><path d="M0 232 120 200 199 224 273 186 380 231 480 209 574 236 682 207 764 233 858 190 1000 223 1000 320 0 320Z"/></g>
+   <rect x="0" y="252" width="1000" height="68" fill="url(#sea)" opacity=".65"/>
+   <g opacity=".7" stroke="#f4c696" stroke-width="1.2"><path d="M10 275H185 M225 282H418 M500 276H710 M771 287H957 M145 304H318 M423 298H614"/></g>
+   <!-- Pyramid and distant temple -->
+   <path d="M516 241 645 108 774 241Z" fill="#907f78" stroke="#ccb39d" stroke-width="3"/><path d="M645 108 774 241 646 241Z" fill="#504d58" opacity=".55"/>
+   <path d="M740 227V173H893V227" fill="#4b515a"/><path d="M727 170 814 140 903 170Z" fill="#a48c7c" stroke="#d8b58d" stroke-width="3"/>
+   <g fill="#b8a48a"><rect x="752" y="177" width="15" height="50"/><rect x="781" y="177" width="15" height="50"/><rect x="809" y="177" width="15" height="50"/><rect x="838" y="177" width="15" height="50"/><rect x="866" y="177" width="15" height="50"/></g>
+   <!-- Lighthouse -->
+   <path d="M915 251 920 138 951 138 964 251Z" fill="#736e70" stroke="#c9a486" stroke-width="2"/><path d="M914 138 935 121 958 138Z" fill="#e4bd8d"/>
+   <rect x="927" y="105" width="15" height="18" fill="#eabf81"/><path d="M918 106 935 95 950 106Z" fill="#e7bc7e"/>
+   <g fill="#efc790"><rect x="927" y="152" width="8" height="12"/><rect x="940" y="181" width="8" height="12"/><rect x="931" y="209" width="9" height="12"/></g>
+   <!-- left monument, temple -->
+   <path d="M-20 251 4 209 270 209 301 251Z" fill="#495361"/>
+   <rect x="36" y="172" width="203" height="77" fill="#4d5461"/>
+   <path d="M17 167 138 117 256 167Z" fill="url(#goldlight)" stroke="#d0ab81" stroke-width="2"/>
+   <rect x="23" y="166" width="230" height="10" fill="#c7ab91"/>
+   <g fill="url(#marble)" stroke="#d7bda0" stroke-width="1"><rect x="45" y="177" width="24" height="70"/><rect x="89" y="177" width="24" height="70"/><rect x="134" y="177" width="24" height="70"/><rect x="179" y="177" width="24" height="70"/><rect x="221" y="177" width="19" height="70"/></g>
+   <rect x="15" y="245" width="251" height="12" fill="#b4a191"/>
+   <g fill="#263b4b"><path d="M282 251 297 206 321 206 337 251Z"/><rect x="294" y="184" width="26" height="25"/><path d="M291 184 307 171 323 184Z"/></g>
+   <g fill="#344656" opacity=".85"><path d="M360 255V212H388V255Z"/><path d="M356 211 375 188 393 211Z"/><rect x="404" y="221" width="70" height="36"/><path d="M396 221 435 193 484 221Z"/></g>
+   <path d="M0 274 Q200 257 342 274 T656 273 T1000 268 V320H0Z" fill="#152e41" opacity=".85"/>
+   <g opacity=".18" stroke="#e6b67b" stroke-width="1"><path d="M0 290H1000 M0 304H1000"/></g>
+  </svg>
+  <div class="mast-shade" aria-hidden="true"></div>
+  <div class="mast-inner">
+    <span class="mast-eyebrow">EN AFTEN BLANDT CIVILISATIONER</span>
+    <div class="brand"><span class="brand-seven">7</span><span class="brand-word">WONDERS</span></div>
+    <div class="brand-divider"><i></i><span>✦</span><i></i></div>
+    <div class="brand-tagline">POINTTÆLLER &amp; VIDUNDERTRÆKNING</div>
+  </div>
+  <div class="mast-era" aria-hidden="true">I <b>·</b> II <b>·</b> III</div>
+</header>
+<main id="app" aria-live="polite"></main>
+<div class="setup-footer">Uofficiel fan-app · 7 Wonders er et varemærke tilhørende dets respektive ejere.</div>
+</div>
+<div id="toast" class="toast" role="status"></div>
+<script>
+(()=>{'use strict';
+ const K='seven-wonders-score-2026-v1';
+ const availableExp=[['leaders','👑','Leaders','Lederskikkelser'],['cities','🌃','Cities','Sorte kort og gæld'],['armada','⚓','Armada','Flåde og øer'],['edifice','🏛️','Edifice','Fælles byggeprojekter'],['wonderpack','🌍','Wonder Pack','Ekstra vidundere']];
+ const baseWonders=[
+ {id:'alexandria',label:'Alexandria',set:'Grundspil'},
+ {id:'babylon',label:'Babylon',set:'Grundspil'},
+ {id:'ephesos',label:'Ephesos',set:'Grundspil'},
+ {id:'giza',label:'Giza',set:'Grundspil'},
+ {id:'halikarnassos',label:'Halikarnassos',set:'Grundspil'},
+ {id:'olympia',label:'Olympia',set:'Grundspil'},
+ {id:'rhodos',label:'Rhodos',set:'Grundspil'}
+ ];
+ const extraWonders={
+ leaders:[{id:'roma',label:'Roma',set:'Leaders'},{id:'abu-simbel',label:'Abu Simbel',set:'Leaders'}],
+ cities:[{id:'byzantium',label:'Byzantium',set:'Cities'},{id:'petra',label:'Petra',set:'Cities'}],
+ armada:[{id:'siracusa',label:'Siracusa',set:'Armada'}],
+ edifice:[{id:'ur',label:'Ur',set:'Edifice'},{id:'carthago',label:'Carthago',set:'Edifice'}],
+ // Abu Simbel findes også i den originale Wonder Pack, men kræver Leaders.
+ // Det er allerede i Leaders-puljen og må ikke trækkes to gange.
+ wonderpack:[{id:'stonehenge',label:'Stonehenge',set:'Wonder Pack'},{id:'great-wall',label:'Den Kinesiske Mur',set:'Wonder Pack'},{id:'manneken-pis',label:'Manneken Pis',set:'Wonder Pack'}]
+ };
+ function wonderPool(){
+ const all=[...baseWonders];
+ for(const [key,list] of Object.entries(extraWonders))if(state.exp[key])all.push(...list);
+ return all;
+ }
+ function shuffle(list){
+ const a=[...list];
+ for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}
+ return a;
+ }
+ function rollWonders(){
+ const pool=wonderPool();
+ const before=state.players.map(p=>p.wonder).join('|');
+ let next=[];
+ // Prøv at undgå samme fordeling ved endnu et tryk på knappen.
+ for(let tries=0;tries<8;tries++){
+   next=shuffle(pool).slice(0,state.players.length);
+   if(next.map(w=>w.id).join('|')!==before)break;
+ }
+ state.players.forEach((p,i)=>p.wonder=next[i]?.id||null);
+ }
+ function syncWonders(){
+ const pool=wonderPool(),valid=new Set(pool.map(w=>w.id)),used=new Set();
+ const free=shuffle(pool).map(w=>w.id);
+ state.players.forEach(p=>{
+   if(!valid.has(p.wonder)||used.has(p.wonder))p.wonder=null;
+   if(p.wonder)used.add(p.wonder);
+ });
+ state.players.forEach(p=>{
+   if(p.wonder)return;
+   const available=free.find(id=>!used.has(id));
+   p.wonder=available||null;
+   if(available)used.add(available);
+ });
+ }
+ function wonderInfo(p){return wonderPool().find(w=>w.id===p.wonder)}
+ function renderWonderDraw(){
+  return `<section class="wonder-draw" aria-label="Tilfældige vidundere"><div class="wonder-draw-header"><div><div class="wonder-draw-title">🎲 Fordeling af vidundere</div><div class="wonder-draw-subtitle">${wonderPool().length} mulige · alle får forskellige</div></div><button type="button" class="btn btn-secondary wonder-reroll" data-action="reroll-wonders">↻ Træk igen</button></div><div class="wonder-assignments">${state.players.map((p,i)=>{
+  const w=wonderInfo(p);return `<div class="wonder-assignment"><span class="number-ball">${i+1}</span><span class="wonder-player" data-wonder-player="${p.id}">${esc(name(p))}</span><span class="wonder-assigned"><strong>${w?esc(w.label):'Ikke trukket'}</strong><small>${w?esc(w.set):''}</small></span></div>`
+ }).join('')}</div>${state.exp.wonderpack&&!state.exp.leaders?'<div class="counter-note">Abu Simbel fra Wonder Pack kræver Leaders og er derfor ikke med i puljen.</div>':''}</section>`;
+ }
+ const defs=[
+ {id:'military',name:'Militær',glyph:'⚔️',color:'#efc9c0',desc:'Læg værdien af dine sejrsmærker sammen, og træk nederlag fra.',tip:'Sejrsmærker: +1 (tidsalder I), +3 (II), +5 (III). Nederlag: −1 hver.',type:'signed'},
+ {id:'coins',name:'Mønter',glyph:'🪙',color:'#efdaa4',desc:'Indtast det antal mønter, du har tilbage. Appen giver 1 point pr. hele 3 mønter.',tip:'Mønter bruges også til at afgøre uafgjorte placeringer. Eventuel gæld fra Cities scores separat.',type:'coins'},
+ {id:'wonder',name:'Vidunder',glyph:'🏛️',color:'#e3d4bc',desc:'Læg point fra dine byggede vidundertrin sammen.',tip:'Tæl kun færdigbyggede trin, der giver point. Ekstra effektpoint fra Edifice føres i Edifice-kategorien.',type:'points'},
+ {id:'blue',name:'Blå kort',glyph:'🔷',color:'#cde0fc',desc:'Læg sejrspoint på alle dine blå bygninger sammen.',tip:'Med Armada medregnes også point fra det blå skib på flådebrættet.',type:'points'},
+ {id:'science',name:'Videnskab',glyph:'⚙️',color:'#cfe8c8',desc:'Tæl de tre videnskabssymboler. Pointene beregnes automatisk.',tip:'Hver slags giver antal² point, plus 7 pr. komplet sæt. Ægte valgfrie symboler placeres optimalt. Symboler fra fx Mask eller Majority skal først omsættes til den type, de faktisk giver.',type:'science'},
+ {id:'yellow',name:'Gule kort',glyph:'🏺',color:'#f0e3a9',desc:'Læg de sejrspoint sammen, som dine gule kort giver.',tip:'Mønter fra gule kort tælles kun i møntkategorien — ikke her.',type:'points'},
+ {id:'guilds',name:'Gilder',glyph:'✦',color:'#e2d4f3',desc:'Læg pointene fra dine lilla gildekort sammen.',tip:'Med Armada må hvert enkelt lilla kort højst give 10 point. Begræns hvert kort, før du lægger pointene sammen.',type:'points'},
+ {id:'leaders',name:'Leaders',glyph:'👑',color:'#dfdad4',desc:'Læg pointene fra dine lederkort sammen.',tip:'Effekter, der giver videnskabssymboler, mønter eller militærmærker, tælles i de tilsvarende kategorier — undgå dobbeltoptælling.',type:'points'},
+ {id:'cities',name:'Cities',glyph:'🌃',color:'#c6c8d0',desc:'Læg point fra dine sorte Cities-kort sammen, og registrér gældsmærker.',tip:'Hvert Cities-gældsmærke giver −1 point. Mønttab tælles ikke igen her.',type:'cities'},
+ {id:'naval',name:'Flådekampe',glyph:'⚓',color:'#c6e2e8',desc:'Læg point fra alle flådesejre og flådenederlag sammen.',tip:'Indtast de faktiske point på dine Armada-kampmærker — ikke antallet af skjolde.',type:'signed'},
+ {id:'islands',name:'Øer',glyph:'🏝️',color:'#bee1df',desc:'Læg sejrspoint fra opdagede økort sammen.',tip:'Effekter fra økort, som allerede tælles som mønter, videnskab eller andet, skal ikke tælles igen her.',type:'points'},
+ {id:'edifice',name:'Edifice',glyph:'🏗️',color:'#ebd2bb',desc:'Tilføj eventuelle direkte sejrspoint fra fællesprojekter, og marker Edifice-gæld.',tip:'Gæld: tidsalder I = −2, II = −3, III = −5. Andre projektbelønninger som mønter og militærmærker regnes i deres normale kategorier.',type:'edifice'}
+ ];
+ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const clamp=(x,min=-999,max=999)=>Math.max(min,Math.min(max,Number.isFinite(x)?Math.trunc(x):0));
+ const defaultData=()=>({military:0,coins:0,wonder:0,blue:0,science:{tablet:0,gear:0,compass:0,wild:0},yellow:0,guilds:0,leaders:0,cities:0,cityDebt:0,naval:0,islands:0,edifice:0,edDebt:[false,false,false]});
+ const newP=i=>({id:'p'+Date.now().toString(36)+i,name:'Spiller '+(i+1),team:i%2,wonder:null,data:defaultData()});
+ const initial=()=>({view:'setup',players:Array.from({length:3},(_,i)=>newP(i)),exp:{leaders:false,cities:false,armada:false,edifice:false,wonderpack:false},teams:false,step:0});
+ let state;
+ try{const raw=JSON.parse(localStorage.getItem(K));if(raw&&Array.isArray(raw.players)&&raw.exp){state=raw;state.players=state.players.map((p,i)=>({id:p.id||'p'+i,name:p.name||'Spiller '+(i+1),team:Number.isFinite(+p.team)?+p.team:i%2,wonder:p.wonder||null,data:{...defaultData(),...(p.data||{}),science:{...defaultData().science,...(p.data?.science||{})},edDebt:Array.isArray(p.data?.edDebt)?p.data.edDebt.slice(0,3):[false,false,false]}}));}else state=initial();}catch(_){state=initial()}
+ const app=document.getElementById('app');
+ function save(){try{localStorage.setItem(K,JSON.stringify(state))}catch(_){}}
+ const active=()=>defs.filter(x=>!(['leaders','cities','naval','islands','edifice'].includes(x.id))||(x.id==='leaders'&&state.exp.leaders)||(x.id==='cities'&&state.exp.cities)||((x.id==='naval'||x.id==='islands')&&state.exp.armada)||(x.id==='edifice'&&state.exp.edifice));
+ function n(v){const z=Number(v);return clamp(z,0,999)}
+ function scienceScore(sc){let best=-1;let dist=[0,0,0];let base=[n(sc.tablet),n(sc.gear),n(sc.compass)];let wild=Math.min(n(sc.wild),30);for(let a=0;a<=wild;a++)for(let b=0;b<=wild-a;b++){let c=wild-a-b;let v=[base[0]+a,base[1]+b,base[2]+c];let score=v.reduce((x,y)=>x+y*y,0)+7*Math.min(...v);if(score>best){best=score;dist=[a,b,c]}}return {score:best,dist}}
+ function categoryScore(p,id){let d=p.data;switch(id){case 'coins':return Math.floor(n(d.coins)/3);case 'science':return scienceScore(d.science).score;case 'cities':return clamp(+d.cities||0)-n(d.cityDebt);case 'edifice':return clamp(+d.edifice||0)-(d.edDebt?.[0]?2:0)-(d.edDebt?.[1]?3:0)-(d.edDebt?.[2]?5:0);default:return clamp(+d[id]||0)}}
+ const total=p=>active().reduce((a,x)=>a+categoryScore(p,x.id),0);
+ const name=p=>p.name.trim()||'Spiller';
+ const teamsEnabled=()=>state.teams&&(state.exp.cities||state.exp.armada)&&(state.players.length===4||state.players.length===6);
+ function toast(msg){const x=document.getElementById('toast');x.textContent=msg;x.classList.add('show');clearTimeout(toast.t);toast.t=setTimeout(()=>x.classList.remove('show'),2300)}
+ function render(){if(state.view==='setup')renderSetup();else if(state.view==='results')renderResults();else renderStage();save()}
+ function renderSetup(){syncWonders();const canTeams=state.players.length%2===0&&state.players.length>=4&&(state.exp.cities||state.exp.armada);
+ if(!canTeams)state.teams=false;
+ app.innerHTML=`<section class="panel setup-panel"><div class="eyebrow">KLARGØR DIN CIVILISATION</div><div class="setup-title-bar"><h1>Før storhedstiden</h1><button type="button" class="btn-newgame-mini" data-action="new" aria-label="Start et nyt spil og nulstil alle point">↻ Nyt spil</button></div><p class="intro">Saml jeres civilisationer, vælg udvidelser og træk vidundere. Når spillet er slut, tæller I point område for område.</p><div class="section-top"><span class="section-title">Antal spillere</span><div class="count-control"><button type="button" data-count="-1" aria-label="Fjern spiller" ${state.players.length<=3?'disabled':''}>−</button><strong>${state.players.length}</strong><button type="button" data-count="1" aria-label="Tilføj spiller" ${state.players.length>=7?'disabled':''}>+</button></div></div><div class="name-list">${state.players.map((p,i)=>`<div class="name-row"><span class="number-ball">${i+1}</span><label class="visually-hidden" for="n${i}">Navn, spiller ${i+1}</label><input id="n${i}" data-name="${p.id}" maxlength="28" value="${esc(p.name)}" placeholder="Spiller ${i+1}" autocomplete="off">${canTeams&&state.teams?`<select class="team-select" data-team="${p.id}" aria-label="Hold for ${esc(name(p))}">${Array.from({length:state.players.length/2},(_,j)=>`<option value="${j}" ${p.team===j?'selected':''}>Hold ${String.fromCharCode(65+j)}</option>`).join('')}</select>`:''}</div>`).join('')}</div><div class="section-top"><span class="section-title">Udvidelser</span><span class="small-muted">Vælg frit</span></div><div class="expand-grid">${availableExp.map(([id,emoji,title,subtitle])=>`<label class="expansion ${state.exp[id]?'is-on':''}"><input type="checkbox" data-exp="${id}" ${state.exp[id]?'checked':''}><span class="exp-emoji">${emoji}</span><span><strong>${title}</strong><small>${subtitle}</small></span></label>`).join('')}</div>${canTeams?`<label class="age-toggle" style="margin-top:15px"><input type="checkbox" data-opt="teams" ${state.teams?'checked':''}> Holdspil (2 spillere pr. hold)</label>`:''}${renderWonderDraw()}<div class="note">Wonder Pack giver flere vidundere, men ingen ny pointkategori. Babel er udeladt som ønsket.</div><button class="btn btn-primary wide setup-start" data-action="start">${state.view==='setup'&&state.step>0?'Fortsæt scoring':'Start scoring'} <span aria-hidden="true">→</span></button></section><p class="muted-legend">Scoringen gemmes automatisk på denne enhed. Appen fungerer uden internet.</p>`}
+ function liveBoardRows(){const rows=sortedResults();return rows.map((x,i)=>`<div class="live-person ${i===0?'first':''}" title="${esc(name(x.p))}: ${x.v} point i alt"><span class="live-rank">${rankingLabel(x,i,rows)}.</span><span class="live-name">${esc(name(x.p))}</span><span class="live-points">${x.v}</span></div>`).join('')}
+ function liveBoard(){return `<aside class="live-board" aria-label="Foreløbig samlet stilling"><div class="live-board-head"><span class="live-board-title">◆ Samlet stilling</span><span class="live-board-note">Opdateres løbende · point i alt</span></div><div class="live-board-grid" data-live-board>${liveBoardRows()}</div></aside>`}
+ function refreshLiveBoard(){const board=document.querySelector('[data-live-board]');if(board)board.innerHTML=liveBoardRows()}
+ function layoutStep(c,i,len){const pct=Math.round((i+1)/len*100);return `<div class="step-header"><div class="top-links"><button class="text-btn" data-action="setup">‹ Opsætning</button><span class="stage-progress">OMRÅDE ${i+1} / ${len}</span><button class="text-btn" data-action="results">Resultater ›</button></div><div class="progress-track"><div class="progress-inner" style="width:${pct}%"></div></div><div class="newgame-actions"><button type="button" class="btn-newgame-mini dark" data-action="new">↻ Nyt spil</button></div></div>${liveBoard()}<section class="score-panel category-${c.id}" style="--category-accent:${c.color}"><div class="stage-hero"><div class="hero-title-row"><div class="hero-glyph" style="--tint:${c.color}">${c.glyph}</div><div><div class="eyebrow">CIVILISATIONENS BEDRIFTER</div><h1>${c.name}</h1></div></div><div class="stage-sub">${c.desc}</div><div class="stage-tip">${c.tip}</div></div><div class="cards">${state.players.map(p=>makeCard(p,c)).join('')}</div></section><div class="score-bottom"><button class="btn btn-quiet" data-action="back" ${i===0?'disabled':''}>← Tilbage</button><button class="btn btn-primary" data-action="next">${i===len-1?'Se resultater':'Næste område'} →</button></div>`}
+ function renderStage(){let stages=active();state.step=clamp(state.step,0,stages.length-1);app.innerHTML=layoutStep(stages[state.step],state.step,stages.length)}
+ const curVal=(p,id,key)=>key?key.startsWith('science.')?n(p.data.science[key.split('.')[1]]):n(p.data[key]):p.data[id]||0;
+ function buttons(p,key,signed=false){const vals=signed?[1,3,5,-1,-3,-5]:[1,5,10,-1,-5,-10];return `<div class="quick-buttons">${vals.map(v=>`<button type="button" class="${v<0?'negative':''}" data-add="${v}" data-key="${key}" data-player="${p.id}" aria-label="${v>0?'+':''}${v} point til ${esc(name(p))}">${v>0?'+':''}${v}</button>`).join('')}</div>`}
+ function stepControl(p,key,value,label){return `<div><div class="mini-label">${label}</div><div class="mini-counter"><button class="mini-step" data-add="-1" data-player="${p.id}" data-key="${key}" aria-label="Fjern ${esc(label)}">−</button><strong class="mini-num" data-view="${p.id}:${key}">${value}</strong><button class="mini-step" data-add="1" data-player="${p.id}" data-key="${key}" aria-label="Tilføj ${esc(label)}">+</button></div></div>`}
+ function makeCard(p,c){let id=c.id;let hd=`<article class="score-card" data-card="${p.id}"><div class="player-card-top"><div class="player-card-ident"><div class="player-name">${esc(name(p))}</div><div class="player-wonder-label">${esc(wonderInfo(p)?.label||'')}</div></div><div class="score-chip"><b data-score="${p.id}">${categoryScore(p,id)}</b> <span>point</span></div></div>`;
+ if(c.type==='science'){let s=p.data.science;let out=scienceScore(s);return hd+`<div class="mini-grid three">${stepControl(p,'science.tablet',n(s.tablet),'📜 Tavler')}${stepControl(p,'science.gear',n(s.gear),'⚙️ Tandhjul')}${stepControl(p,'science.compass',n(s.compass),'🧭 Passere')}</div><div class="mini-divider"></div><div class="mini-grid">${stepControl(p,'science.wild',n(s.wild),'✦ Valgfrie symboler')}<div style="display:flex;align-items:end;justify-content:center;text-align:center;font-size:11px;line-height:1.5;color:#736e62">Bedste fordeling<br><strong data-wild="${p.id}" style="font-size:13px;color:#3b4b4c">${out.dist.join(' / ')}</strong></div></div><div class="counter-note">Valgfrie symboler fordeles automatisk for flest mulige point.</div></article>`}
+ if(c.type==='edifice'){return hd+`<div class="mini-label">Direkte VP fra færdige projekter</div><div class="counter-row"><input class="score-field" type="number" inputmode="numeric" data-input="edifice" data-player="${p.id}" min="0" max="999" value="${n(p.data.edifice)}">${buttons(p,'edifice')}</div><div class="mini-divider"></div><div class="mini-label">Gældsmærker fra mislykkede projekter</div>${[-2,-3,-5].map((v,i)=>`<label class="age-toggle"><input type="checkbox" data-eddebt="${i}" data-player="${p.id}" ${p.data.edDebt?.[i]?'checked':''}> Tidsalder ${['I','II','III'][i]} <em>${v} point</em></label>`).join('')}</article>`}
+ if(c.type==='cities'){return hd+`<div class="mini-label">Point fra sorte kort</div><div class="counter-row"><input class="score-field" type="number" inputmode="numeric" data-input="cities" data-player="${p.id}" min="0" max="999" value="${n(p.data.cities)}">${buttons(p,'cities')}</div><div class="mini-divider"></div><div class="mini-grid">${stepControl(p,'cityDebt',n(p.data.cityDebt),'Gældsmærker (−1)')}<div style="color:#777366;align-self:end;font-size:11px;line-height:1.45">1 minuspoint pr. Cities-gældsmærke</div></div></article>`}
+ let val=c.type==='coins'?n(p.data.coins):clamp(+p.data[id]||0,c.type==='signed'?-999:0,999);
+ return hd+`<div class="counter-row"><label class="visually-hidden" for="f${p.id}${id}">${c.type==='coins'?'Antal mønter':'Point'} for ${esc(name(p))}</label><input id="f${p.id}${id}" class="score-field" type="number" inputmode="numeric" data-input="${id}" data-player="${p.id}" min="${c.type==='signed'?-999:0}" max="999" value="${val}">${buttons(p,id,c.type==='signed')}</div>${c.type==='coins'?`<div class="counter-note"><span data-coin="${p.id}">${n(p.data.coins)} mønter = ${Math.floor(n(p.data.coins)/3)} point</span></div>`:''}</article>`}
+ function refreshCard(p){const c=active()[state.step];let score=categoryScore(p,c.id);document.querySelectorAll('[data-score="'+p.id+'"]').forEach(e=>e.textContent=score);const st=p.data.science;
+ document.querySelectorAll('[data-wild="'+p.id+'"]').forEach(e=>e.textContent=scienceScore(st).dist.join(' / '));document.querySelectorAll('[data-coin="'+p.id+'"]').forEach(e=>e.textContent=n(p.data.coins)+' mønter = '+Math.floor(n(p.data.coins)/3)+' point');document.querySelectorAll('[data-view^="'+p.id+':"]').forEach(e=>{let key=e.dataset.view.split(':')[1];e.textContent=key.startsWith('science.')?n(st[key.split('.')[1]]):n(p.data[key])});refreshLiveBoard();}
+ function sortedResults(){let players=state.players.map(p=>({p,v:total(p),coin:n(p.data.coins)}));players.sort((a,b)=>b.v-a.v||b.coin-a.coin);return players}
+ function rankingLabel(x,i,list){if(i===0)return 1;let rank=1;for(let j=1;j<=i;j++)if(list[j].v!==list[j-1].v||list[j].coin!==list[j-1].coin)rank=j+1;return rank}
+ function renderResults(){let arr=sortedResults(),stages=active();const first=arr[0],winners=arr.filter(x=>x.v===first.v&&x.coin===first.coin);let teamhtml='';
+ if(teamsEnabled()){const groups=Array.from({length:state.players.length/2},(_,i)=>({id:i,players:state.players.filter(p=>p.team===i)})).map(g=>({...g,points:g.players.reduce((sum,p)=>sum+total(p),0),coins:g.players.reduce((sum,p)=>sum+n(p.data.coins),0)})).sort((a,b)=>b.points-a.points||b.coins-a.coins);teamhtml=`<div class="result-section"><div class="section-title">Holdresultater</div><div class="team-wins">${groups.map((g,i)=>`<div class="team-win">${i===0?'🏆 ':''}Hold ${String.fromCharCode(65+g.id)} · ${g.players.map(x=>esc(name(x))).join(' + ')} <span>${g.points} p</span></div>`).join('')}</div></div>`}
+ const winnerTitle=teamsEnabled()?'Individuelle resultater':winners.length>1?'Delt førsteplads':'Vinderen er';
+ app.innerHTML=`<div class="step-header"><div class="top-links"><button class="text-btn" data-action="back-from-results">‹ Sidste område</button><span class="stage-progress">FÆRDIG</span><button type="button" class="text-btn new-game-link" data-action="new">↻ Nyt spil</button></div></div><section class="panel final-panel"><div class="results-hero"><div class="laurel">❦</div><div class="eyebrow">CIVILISATIONERNES EFTERMÆLE</div><h1>Ære og berømmelse</h1><p>${state.players.length} spillere · ${stages.length} scoreområder</p></div>${teamhtml}<div class="winner-label">${winnerTitle}</div>${!teamsEnabled()?`<div class="winner-name">${winners.map(x=>esc(name(x.p))).join(' & ')}</div>`:''}<div class="ranking">${arr.map((x,i)=>`<div class="rank-row ${rankingLabel(x,i,arr)===1?'first':''}"><span class="rank-num">${rankingLabel(x,i,arr)}.</span><div style="min-width:0;flex:1"><div class="rank-name">${esc(name(x.p))}</div><div class="rank-detail">${esc(wonderInfo(x.p)?.label||'')} · ${x.coin} mønter · ${stages.filter(c=>categoryScore(x.p,c.id)!==0).length} pointområder</div></div><div class="rank-pts">${x.v} <small>p</small></div></div>`).join('')}</div><div class="result-section"><div class="section-title">Pointfordeling</div><div class="result-table-scroll"><table class="result-table"><thead><tr><th>Område</th>${state.players.map(p=>`<th>${esc(name(p))}</th>`).join('')}</tr></thead><tbody>${stages.map(c=>`<tr><td>${c.glyph} ${c.name}</td>${state.players.map(p=>`<td>${categoryScore(p,c.id)}</td>`).join('')}</tr>`).join('')}<tr class="total"><td>Samlet</td>${state.players.map(p=>`<td>${total(p)}</td>`).join('')}</tr></tbody></table></div></div><div class="note">Ved pointlighed vinder spilleren med flest mønter. Er også mønterne ens, deles placeringen.</div><div class="results-actions"><button class="btn btn-secondary" data-action="copy">⧉ Kopiér resultat</button><button class="btn btn-secondary" data-action="edit">✎ Ret point</button></div><p class="new-game-hint">Beholder spillere og udvidelser, men nulstiller point og trækker nye vidundere.</p><button class="btn btn-primary wide" style="margin-top:10px" data-action="new">↻ Nyt spil</button></section>`}
+ function getPlayer(id){return state.players.find(p=>p.id===id)}
+ function scrollTop(){window.scrollTo({top:0,behavior:'instant'})}
+ function changeView(v){state.view=v;render();scrollTop()}
+ app.addEventListener('click',e=>{
+ const add=e.target.closest('[data-add]');if(add){let p=getPlayer(add.dataset.player);if(!p)return;let key=add.dataset.key,delta=+add.dataset.add; if(key.startsWith('science.')){let sub=key.split('.')[1];p.data.science[sub]=clamp(n(p.data.science[sub])+delta,0,999)}else{let signed=key==='military'||key==='naval';p.data[key]=clamp((+p.data[key]||0)+delta,signed?-999:0,999)}let input=document.querySelector('input[data-input="'+key+'"][data-player="'+p.id+'"]');if(input)input.value=p.data[key];refreshCard(p);save();return}
+ const ct=e.target.closest('[data-count]');if(ct){let d=+ct.dataset.count;if(d>0&&state.players.length<7)state.players.push(newP(state.players.length));if(d<0&&state.players.length>3)state.players.pop();if(state.teams&&state.players.length%2===0)state.players.forEach((p,i)=>p.team=i%(state.players.length/2));render();return}
+ const action=e.target.closest('[data-action]')?.dataset.action;if(!action)return;
+ if(action==='reroll-wonders'){rollWonders();render();toast('Nye vidundere fordelt');return}
+ if(action==='start'){syncWonders();if(teamsEnabled()){const counts=Array.from({length:state.players.length/2},(_,j)=>state.players.filter(p=>p.team===j).length);if(counts.some(x=>x!==2)){toast('Hvert hold skal have præcis 2 spillere');return}}state.players.forEach((p,i)=>{p.name=p.name.trim()||'Spiller '+(i+1)});state.step=clamp(state.step,0,active().length-1);changeView('score')}
+ else if(action==='setup'){changeView('setup')}
+ else if(action==='next'){if(state.step>=active().length-1)changeView('results');else{state.step++;render();scrollTop()}}
+ else if(action==='back'){state.step=Math.max(0,state.step-1);render();scrollTop()}
+ else if(action==='results')changeView('results');
+ else if(action==='back-from-results'){state.step=active().length-1;changeView('score')}
+ else if(action==='edit'){state.step=0;changeView('score')}
+ else if(action==='new'){if(confirm('Start et nyt spil? Alle point fra det nuværende spil slettes. Spillernavne og udvidelser beholdes, og der trækkes nye vidundere.')){state.players.forEach(p=>p.data=defaultData());rollWonders();state.step=0;changeView('setup')}}
+ else if(action==='copy')copyResults();
+ });
+ app.addEventListener('change',e=>{let t=e.target;if(t.matches('[data-exp]')){state.exp[t.dataset.exp]=t.checked;state.step=0;render()}
+ else if(t.matches('[data-opt="teams"]')){state.teams=t.checked;if(state.teams)state.players.forEach((p,i)=>p.team=i%(state.players.length/2));render()}
+ else if(t.matches('[data-team]')){let p=getPlayer(t.dataset.team);if(p){p.team=+t.value;save()}}
+ else if(t.matches('[data-eddebt]')){let p=getPlayer(t.dataset.player);if(p){p.data.edDebt[+t.dataset.eddebt]=t.checked;refreshCard(p);save()}}
+ });
+ app.addEventListener('input',e=>{let t=e.target;if(t.matches('[data-name]')){let p=getPlayer(t.dataset.name);if(p){p.name=t.value;const el=document.querySelector('[data-wonder-player="'+p.id+'"]');if(el)el.textContent=name(p);save()}}else if(t.matches('[data-input]')){let p=getPlayer(t.dataset.player);if(!p)return;let key=t.dataset.input;let raw=parseInt(t.value,10);p.data[key]=clamp(Number.isNaN(raw)?0:raw,(key==='military'||key==='naval')?-999:0,999);refreshCard(p);save()}});
+ function copyResults(){const list=sortedResults();let txt='7 Wonders · Resultat\n'+list.map((x,i)=>`${rankingLabel(x,i,list)}. ${name(x.p)} (${wonderInfo(x.p)?.label||'Ukendt vidunder'}): ${x.v} point (${x.coin} mønter)`).join('\n')+'\n\n'+active().map(c=>c.name+': '+state.players.map(p=>`${name(p)} ${categoryScore(p,c.id)}`).join(', ')).join('\n');if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(txt).then(()=>toast('Resultatet er kopieret')).catch(()=>fallbackCopy(txt))}else fallbackCopy(txt)}
+ function fallbackCopy(txt){let ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast('Resultatet er kopieret')}catch(_){toast('Kunne ikke kopiere teksten')}ta.remove()}
+ render();
+})();
+</script>
 </body>
 </html>
